@@ -2,6 +2,6 @@ namespace project_service.models;
 
 public class Project
 {
-  private readonly Guid id;
-  private TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
+  public Guid Id { get; init; } = Guid.NewGuid();
+  public TimeSpan TotalTime { get; set; } = TimeSpan.Zero;
 }
