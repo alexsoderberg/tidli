@@ -1,0 +1,29 @@
+{
+  "name": "tidli",
+  "version": "1.0.0",
+  "description": "Tidli - Full-stack application with Angular frontend and .NET backend",
+  "private": true,
+  "workspaces": [
+    "apps/web-ui"
+  ],
+  "scripts": {
+    "dev": "docker compose up --build",
+    "dev:detached": "docker compose up --build -d",
+    "down": "docker compose down",
+    "build": "npm run build:web-ui && npm run build:project-service",
+    "build:web-ui": "npm run build --workspace=web-ui",
+    "build:project-service": "cd apps/project-service && dotnet build",
+    "test": "npm run test:web-ui && npm run test:project-service",
+    "test:web-ui": "npm run test --workspace=web-ui",
+    "test:project-service": "cd apps/project-service && dotnet test",
+    "lint": "npm run lint:web-ui",
+    "lint:web-ui": "npm run lint --workspace=web-ui",
+    "clean": "npm run clean:web-ui && npm run clean:project-service",
+    "clean:web-ui": "npm run clean --workspace=web-ui || true",
+    "clean:project-service": "cd apps/project-service && dotnet clean || true"
+  },
+  "packageManager": "npm@11.6.2",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
