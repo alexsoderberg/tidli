@@ -1,4 +1,4 @@
-namespace project_service.models;
+namespace project_service.Models;
 
 public enum ColumnType
 {

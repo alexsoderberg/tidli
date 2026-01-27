@@ -1,4 +1,4 @@
-namespace project_service.models;
+namespace project_service.Models;
 
 public class Column
 {
@@ -9,4 +9,7 @@ public class Column
   public int Order { get; set; }
 
   public ColumnType Type { get; set; }
+  
+  public Project Project { get; set; } = null!;
+  public List<ProjectTask> Tasks { get; set; } = new();
 }
