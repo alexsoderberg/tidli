@@ -11,5 +11,5 @@ public class Column
   public ColumnType Type { get; set; }
   
   public Project Project { get; set; } = null!;
-  public List<ProjectTask> Tasks { get; set; } = new();
+  public List<ProjectTask> Tasks { get; set; } = [];
 }
