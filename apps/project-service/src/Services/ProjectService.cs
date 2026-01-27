@@ -1,6 +1,7 @@
-using project_service.Models;
+using Microsoft.EntityFrameworkCore;
 using project_service.Data;
 using project_service.Dtos;
+using project_service.Models;
 
 namespace project_service.Services;
 
@@ -24,5 +25,14 @@ public class ProjectsService(ProjectContext context)
     await _context.SaveChangesAsync();
 
     return project;
+  }
+
+  public async Task<bool> DeleteProjectAsync(Guid id)
+  {
+    var deletedRows = await _context.Projects
+        .Where(p => p.Id == id)
+        .ExecuteDeleteAsync();
+
+    return deletedRows > 0;
   }
 }

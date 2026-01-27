@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using project_service.Dtos;
 using project_service.Models;
@@ -28,5 +27,18 @@ public class ProjectsController(ProjectsService service) : ControllerBase
     var project = await service.CreateProjectAsync(dto);
 
     return CreatedAtAction(nameof(GetProject), new { id = project.Id }, project);
+  }
+
+  [HttpDelete("{id}")]
+  public async Task<ActionResult<Project>> DeleteProjectAsync(Guid id)
+  {
+    var isDeleted = await service.DeleteProjectAsync(id);
+    
+    if (!isDeleted)
+    {
+      return NotFound();
+    }
+
+    return NoContent();
   }
 }
