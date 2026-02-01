@@ -3,7 +3,7 @@ using project_service.Dtos;
 using project_service.Models;
 using project_service.Services;
 
-namespace project_service.controllers;
+namespace project_service.Controllers;
 
 [ApiController]
 [Route("api/v1/[controller]")]
@@ -13,7 +13,7 @@ public class ProjectsController(ProjectsService service) : ControllerBase
   [HttpGet("{id}")]
   public async Task<ActionResult<Project>> GetProject(Guid id)
   {
-    var project = await service.GetProject(id);
+    var project = await service.GetProjectAsync(id);
     if (project == null)
     {
       return NotFound();

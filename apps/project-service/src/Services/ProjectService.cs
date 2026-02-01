@@ -9,7 +9,7 @@ public class ProjectsService(ProjectContext context)
 {
   private readonly ProjectContext _context = context;
 
-  public async Task<Project?> GetProject(Guid id)
+  public async Task<Project?> GetProjectAsync(Guid id)
   {
     return await _context.Projects.FindAsync(id);
   }
