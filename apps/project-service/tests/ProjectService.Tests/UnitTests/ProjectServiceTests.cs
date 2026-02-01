@@ -44,7 +44,7 @@ public class ProjectServiceTests : IDisposable
         var createdProject = await _service.CreateProjectAsync(dto);
 
         // Act
-        var result = await _service.GetProject(createdProject.Id);
+        var result = await _service.GetProjectAsync(createdProject.Id);
 
         // Assert
         Assert.NotNull(result);
@@ -56,7 +56,7 @@ public class ProjectServiceTests : IDisposable
     public async Task GetProject_ShouldReturnNull_WhenNotExists()
     {
         // Act
-        var result = await _service.GetProject(Guid.NewGuid());
+        var result = await _service.GetProjectAsync(Guid.NewGuid());
 
         // Assert
         Assert.Null(result);
