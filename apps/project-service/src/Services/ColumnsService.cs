@@ -5,10 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using project_service.Data;
 using project_service.Dtos;
 using project_service.Models;
+using project_service.Services.Interfaces;
 
 namespace project_service.Services;
 
-public class ColumnsService(ProjectContext context)
+public class ColumnsService(ProjectContext context) : IColumnsService
 {
   public async Task<List<Column>> GetColumnsAsync(Guid projectId)
   {

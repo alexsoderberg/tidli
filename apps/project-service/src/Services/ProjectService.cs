@@ -2,10 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using project_service.Data;
 using project_service.Dtos;
 using project_service.Models;
+using project_service.Services.Interfaces;
 
 namespace project_service.Services;
 
-public class ProjectsService(ProjectContext context)
+public class ProjectsService(ProjectContext context) : IProjectService
 {
   private readonly ProjectContext _context = context;
 
