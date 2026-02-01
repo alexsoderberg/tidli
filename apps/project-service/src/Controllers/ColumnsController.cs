@@ -14,7 +14,7 @@ public class ColumnsController(ColumnsService service) : ControllerBase
   [HttpGet]
   public async Task<ActionResult<List<Column>>> GetColumns([FromRoute] Guid projectId)
   {
-    var columns = await service.GetAllColumnsAsync(projectId);
+    var columns = await service.GetColumnsAsync(projectId);
     return Ok(columns);
   }
 
