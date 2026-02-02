@@ -30,4 +30,13 @@ public class TasksService(ProjectContext _context) : ITasksService
 
     return projectTask;
   }
+
+  public async Task<bool> DeleteTaskAsync(Guid taskId)
+  {
+    var deletedRows = await _context.ProjectTasks
+      .Where(t => t.Id == taskId)
+      .ExecuteDeleteAsync();
+    
+    return deletedRows > 0;
+  }
 }
