@@ -7,14 +7,14 @@ namespace ProjectService.Tests.Fakes.Services;
 public class FakeProjectService : IProjectService
 {
 
-  public Project ProjectToReturn { get; set; } = new Project { Name = "FakeProject"};
+  public Project? ProjectToReturn { get; set; } = new Project { Name = "FakeProject"};
   public bool DeleteResult { get; set; } = true;
   public Project? LastCreatedProject { get; private set; }
 
 
   public Task<Project> CreateProjectAsync(CreateProjectDTO dto)
   {
-    return Task.FromResult(ProjectToReturn);
+    return Task.FromResult(ProjectToReturn)!;
   }
 
   public Task<bool> DeleteProjectAsync(Guid id)
@@ -24,6 +24,6 @@ public class FakeProjectService : IProjectService
 
   public Task<Project?> GetProjectAsync(Guid id)
   {
-    return Task.FromResult(LastCreatedProject);
+    return Task.FromResult(ProjectToReturn);
   }
 }

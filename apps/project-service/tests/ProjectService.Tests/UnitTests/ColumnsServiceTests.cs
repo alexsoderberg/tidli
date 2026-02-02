@@ -1,4 +1,3 @@
-using Microsoft.Build.Experimental.ProjectCache;
 using Microsoft.EntityFrameworkCore;
 using project_service.Data;
 using project_service.Dtos;
@@ -27,23 +26,29 @@ public class ColumnsServiceTests : IDisposable
   public async Task CreateColumnAsync_ShouldReturnColumn_WhenValidParameters()
   {
     // Given
-    var projectId = Guid.NewGuid();
-    
-    _context.Projects.Add(new Project { Id = projectId, Name = "Test Project" });
+    var project = new Project
+    {
+      Id = Guid.NewGuid(),
+      Name = "project1"
+    };
+
+    _context.Projects.Add(project);
     await _context.SaveChangesAsync();
     
+
+
     var dto = new CreateColumnDto
     {
-      Name = "abc123",
+      Name = "column1",
       Type = ColumnType.Backlog
     };
 
     // When
-    var column = await _service.CreateColumnAsync(projectId, dto);
+    var column = await _service.CreateColumnAsync(project.Id, dto);
 
     // Then
     Assert.NotNull(column);
-    Assert.Equal(column.ProjectId, projectId);
+    Assert.Equal(column.ProjectId, project.Id);
     Assert.Equal(column.Name, dto.Name);
   }
 
