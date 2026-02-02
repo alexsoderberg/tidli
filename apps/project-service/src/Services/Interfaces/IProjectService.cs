@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using project_service.Dtos;
 using project_service.Models;
 
@@ -8,6 +9,6 @@ public interface IProjectService
   Task<Project?> GetProjectAsync(Guid id);
 
   Task<Project> CreateProjectAsync(CreateProjectDTO dto);
-  
+
   Task<bool> DeleteProjectAsync(Guid id);
 }
