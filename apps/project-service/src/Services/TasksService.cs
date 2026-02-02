@@ -19,12 +19,6 @@ public class TasksService(ProjectContext _context) : ITasksService
 
   public async Task<ProjectTask> CreateTaskAsync(Guid columnId, CreateTaskDto dto)
   {
-    var columnExists = await _context.Columns.AnyAsync(c => c.Id == columnId);
-    if (!columnExists)
-    {
-      throw new KeyNotFoundException($"Column with ID {columnId} was not found.");
-    }
-
     var projectTask = new ProjectTask
     {
       ColumnId = columnId,
@@ -36,5 +30,4 @@ public class TasksService(ProjectContext _context) : ITasksService
 
     return projectTask;
   }
-
 }
