@@ -53,6 +53,24 @@ public class ColumnsServiceTests : IDisposable
   }
 
   [Fact]
+  public async Task CreateColumnAsync_ShouldThrowException_WhenNonExistentProjectId()
+  {
+    // Given
+    var invalidProjectId = Guid.NewGuid();
+
+    var dto = new CreateColumnDto
+    {
+      Name = "column1",
+      Type = ColumnType.Backlog
+    };
+    
+    // Then
+    var exception = await Assert.ThrowsAsync<KeyNotFoundException>(() => _service.CreateColumnAsync(invalidProjectId, dto));
+
+    Assert.Contains(invalidProjectId.ToString(), exception.Message);
+  }
+
+  [Fact]
   public async Task GetColumnsAsync_ShouldReturnColumns_WhenColumnExist()
   {
     // 1. Arrange (Given)
