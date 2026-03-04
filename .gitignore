@@ -70,3 +70,79 @@ compose.override.yml
 # Test files
 **/*.dbmdl
 **/*.jfm
+apps/web-ui/.editorconfig
+
+# Angular build outputs (more specific)
+**/.angular/
+**/dist/
+# TypeScript build info
+**/*.tsbuildinfo
+# Angular SSR server build
+**/server/
+
+lcov.info
+.nyc_output/
+# Angular specific generated files
+.next/
+angular.json.backup
+# Package manager lock files (if using pnpm/yarn)
+pnpm-lock.yaml
+yarn.lock
+# E2E test outputs
+cypress/
+playwright-report/
+test-results/
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+# Optional npm cache directory
+.npm
+# Optional eslint cache
+.eslintcache
+# Optional REPL history
+.node_repl_history
+# Output of 'npm pack'
+*.tgz
+# Yarn Integrity file
+.yarn-integrity
+# dotenv environment variables file
+.env.test
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+# NuGet
+*.nupkg
+packages/
+*.nuget.cache
+*.nuget.props
+*.nuget.targets
