@@ -1,6 +1,15 @@
 <div class="container">
-  <app-task></app-task>
-  <app-task></app-task>
-  <app-task></app-task>
-  <app-task></app-task>
+  <h2>{{stage().title}}</h2>
+  @for (task of stage().tasks; track task.id) {
+    <app-task 
+      [title]="task.title" 
+      [description]="task.description">
+      <div class="actions">
+        <button (click)="onMoveLeft(task.id)" [disabled]="!canMoveLeft()">←</button>
+        <button (click)="onRemoveTask(task.id)">×</button>
+        <button (click)="onMoveRight(task.id)" [disabled]="!canMoveRight()">→</button>
+      </div>
+    </app-task>
+  }
+  <button (click)="onAddTask()">+ Add Task</button>
 </div>
