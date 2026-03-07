@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-task',
@@ -7,6 +7,7 @@ import { Component, signal } from '@angular/core';
   styleUrl: './task.css',
 })
 export class Task {
-  title = "this is a title";
-  description = "This is a description";
+  title = input<string>();
+  description = input<string>();
+  id = input<string>();
 }
