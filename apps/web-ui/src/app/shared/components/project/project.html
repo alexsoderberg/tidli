@@ -1,7 +1,16 @@
 <div class="container">
   <div class="stage-container">
-    <app-stage></app-stage>
-    <app-stage></app-stage>
-    <app-stage></app-stage>
+    @for (stage of stages(); track stage.id; let i = $index) {
+      <app-stage 
+        [stage]="stage"
+        [stageIndex]="i"
+        [totalStages]="stages().length"
+        (taskAdded)="addTask(stage.id)"
+        (taskRemoved)="removeTask(stage.id, $event)"
+        (taskMovedLeft)="moveTaskLeft(stage.id, $event)"
+        (taskMovedRight)="moveTaskRight(stage.id, $event)">
+      </app-stage>
+    }
   </div>
+  <button (click)="handleAddStage()">Add stage</button>
 </div>
