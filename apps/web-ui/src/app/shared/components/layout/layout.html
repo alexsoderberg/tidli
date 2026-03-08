@@ -1,0 +1,12 @@
+<div class="layout" [class.sidebar-collapsed]="sidebarCollapsed()">
+  <aside class="sidebar">
+    <button class="toggle-btn" (click)="toggleSidebar()">
+      {{ sidebarCollapsed() ? '→' : '←' }}
+    </button>
+    <app-projectslist></app-projectslist>
+  </aside>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

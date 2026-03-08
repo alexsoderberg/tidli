@@ -1,0 +1,29 @@
+<div class="projectslist">
+  <div class="header">
+    <h3>Projects</h3>
+    <button (click)="openCreateModal()" class="add-btn">+</button>
+  </div>
+
+  <ul class="project-list">
+    @for (project of projects(); track project.id) {
+      <li>
+        <a [routerLink]="['/projects', project.id]" routerLinkActive="active">
+          {{ project.name }}
+        </a>
+      </li>
+    }
+  </ul>
+</div>
+
+@if (showCreateModal()) {
+  <div class="modal-overlay" (click)="closeCreateModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Create Project</h2>
+      <input #projectName type="text" placeholder="Project name" />
+      <div class="modal-actions">
+        <button (click)="closeCreateModal()">Cancel</button>
+        <button (click)="createProject(projectName.value)">Create</button>
+      </div>
+    </div>
+  </div>
+}

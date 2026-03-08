@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, Input, signal, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Stage } from "../stage/stage";
-import { Task } from "../task/task.model";
 import { Stage as StageModel } from '../stage/stage.model';
+import { ProjectService, Project as ProjectModel } from '../../../core/services/project.service';
 
 @Component({
   selector: 'app-project',
@@ -9,12 +10,35 @@ import { Stage as StageModel } from '../stage/stage.model';
   templateUrl: './project.html',
   styleUrl: './project.css',
 })
-export class Project {
-  stages = signal<StageModel[]>([
-    { id: 'todo', title: 'To Do', tasks: [] },
-    { id: 'in-progress', title: 'In Progress', tasks: [] },
-    { id: 'done', title: 'Done', tasks: [] },
-  ]);
+export class Project implements OnInit {
+  private route = inject(ActivatedRoute);
+  private projectService = inject(ProjectService);
+
+  @Input() projectId: string | null = null;
+
+  project = signal<ProjectModel | null>(null);
+  stages = signal<StageModel[]>([]);
+
+  ngOnInit(): void {
+    if (this.projectId) {
+      this.loadProject(this.projectId);
+    } else {
+      this.route.paramMap.subscribe(params => {
+        const id = params.get('id');
+        if (id) {
+          this.loadProject(id);
+        }
+      });
+    }
+  }
+
+  private loadProject(id: string): void {
+    const fetched = this.projectService.getProject(id);
+    if (fetched) {
+      this.project.set(fetched);
+      this.stages.set(fetched.stages);
+    }
+  }
 
   getStage(stageId: string): StageModel | undefined {
     return this.stages().find(s => s.id === stageId);
