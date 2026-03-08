@@ -1,16 +1,117 @@
 .container {
-  width: 80vw;
-  margin: auto;
-  border: 1px solid black;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .stage-container {
-  display: grid;
-  gap: 10px;
-  grid-template-columns: auto auto auto auto;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.stage-container > * {
-  background-color: grey;
+.add-stage-btn {
+  background: transparent;
+  border: 1px dashed #444;
+  color: #888;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  min-width: 200px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.add-stage-btn:hover {
+  border-color: #666;
+  color: #aaa;
+  background: #222;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #222;
+  padding: 1.5rem;
+  border-radius: 8px;
+  min-width: 300px;
+}
+
+.modal h2 {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 0.5rem;
+  background: #333;
+  border: 1px solid #444;
+  color: #fff;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #4a90d9;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.modal-actions button {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+.modal-actions button:first-child {
+  background: transparent;
+  color: #ccc;
+}
+
+.modal-actions button:first-child:hover {
+  background: #333;
+}
+
+.modal-actions button:last-child {
+  background: #4a90d9;
+  color: white;
+}
+
+.modal-actions button:last-child:hover {
+  background: #5a9fe9;
 }

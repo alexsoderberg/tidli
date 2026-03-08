@@ -1,12 +1,13 @@
 import { Component, inject, Input, signal, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { Stage } from "../stage/stage";
 import { Stage as StageModel } from '../stage/stage.model';
 import { ProjectService, Project as ProjectModel } from '../../../core/services/project.service';
 
 @Component({
   selector: 'app-project',
-  imports: [Stage],
+  imports: [Stage, FormsModule],
   templateUrl: './project.html',
   styleUrl: './project.css',
 })
@@ -18,6 +19,12 @@ export class Project implements OnInit {
 
   project = signal<ProjectModel | null>(null);
   stages = signal<StageModel[]>([]);
+
+  showAddStageModal = signal(false);
+  newStageName = '';
+  newStageOrder = 0;
+  newStageType = 'Backlog';
+  draggedStageIndex: number | null = null;
 
   ngOnInit(): void {
     if (this.projectId) {
@@ -48,11 +55,16 @@ export class Project implements OnInit {
     return this.stages().findIndex(s => s.id === stageId);
   }
 
-  addTask(stageId: string): void {
+  addTask(stageId: string, taskData?: { title: string; description: string; totalTime: number }): void {
     this.stages.update(stages =>
       stages.map(s =>
         s.id === stageId
-          ? { ...s, tasks: [...s.tasks, { id: crypto.randomUUID(), title: 'New Task', description: 'Description' }] }
+          ? { ...s, tasks: [...s.tasks, { 
+              id: crypto.randomUUID(), 
+              title: taskData?.title ?? 'New Task', 
+              description: taskData?.description ?? 'Description', 
+              totalTime: taskData?.totalTime ?? 0 
+            }] }
           : s
       )
     );
@@ -151,6 +163,52 @@ export class Project implements OnInit {
   }
 
   handleAddStage(): void {
-    console.log("handleAddStage triggered");
+    this.newStageName = '';
+    this.newStageOrder = this.stages().length;
+    this.newStageType = 'Backlog';
+    this.showAddStageModal.set(true);
+  }
+
+  closeModal(): void {
+    this.showAddStageModal.set(false);
+  }
+
+  createStage(): void {
+    if (!this.newStageName.trim()) return;
+
+    this.stages.update(stages => [
+      ...stages,
+      {
+        id: crypto.randomUUID(),
+        title: this.newStageName,
+        tasks: [],
+        order: this.newStageOrder,
+        type: this.newStageType as 'Backlog' | 'InProgress' | 'Done'
+      }
+    ]);
+
+    this.closeModal();
+  }
+
+  reorderStages(fromIndex: number, toIndex: number): void {
+    if (fromIndex === toIndex) return;
+
+    this.stages.update(stages => {
+      const result = [...stages];
+      const [moved] = result.splice(fromIndex, 1);
+      result.splice(toIndex, 0, moved);
+      return result;
+    });
+  }
+
+  onStageDragStart(index: number): void {
+    this.draggedStageIndex = index;
+  }
+
+  onStageReordered(toIndex: number): void {
+    if (this.draggedStageIndex !== null && this.draggedStageIndex !== toIndex) {
+      this.reorderStages(this.draggedStageIndex, toIndex);
+    }
+    this.draggedStageIndex = null;
   }
 }

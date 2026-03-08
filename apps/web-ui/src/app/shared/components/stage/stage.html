@@ -1,16 +1,54 @@
-<div class="container" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
-  <h2>{{stage().title}}</h2>
-  @for (task of stage().tasks; track task.id) {
-    <app-task 
-      [title]="task.title" 
-      [description]="task.description"
-      [id]="task.id">
-      <div class="actions">
-        <button (click)="onMoveLeft(task.id)" [disabled]="!canMoveLeft()">←</button>
-        <button (click)="onRemoveTask(task.id)">×</button>
-        <button (click)="onMoveRight(task.id)" [disabled]="!canMoveRight()">→</button>
-      </div>
-    </app-task>
-  }
-  <button (click)="onAddTask()">+ Add Task</button>
+<div class="container" 
+     [class.drag-over]="isDragOver" 
+     [class.stage-drag-over]="isStageDragOver"
+     (dragover)="onDragOver($event); onStageDragOver($event)" 
+     (dragleave)="onDragLeave(); onStageDragLeave()" 
+     (drop)="onDrop($event); onStageDrop($event)"
+     (dragend)="onStageDragLeave()">
+  <div class="header">
+    <h2>{{stage().title}}</h2>
+    <div class="drag-handle" draggable="true" (dragstart)="onStageDragStart($event)">⋮⋮</div>
+  </div>
+  <div class="tasks">
+    @for (task of stage().tasks; track task.id) {
+      <app-task 
+        [title]="task.title" 
+        [description]="task.description"
+        [id]="task.id">
+        <div class="actions">
+          <button (click)="onMoveLeft(task.id)" [disabled]="!canMoveLeft()">←</button>
+          <button (click)="onRemoveTask(task.id)">×</button>
+          <button (click)="onMoveRight(task.id)" [disabled]="!canMoveRight()">→</button>
+        </div>
+      </app-task>
+    }
+  </div>
+  <button class="add-task-btn" (click)="onAddTask()">+ Add Task</button>
 </div>
+
+@if (showAddTaskModal()) {
+  <div class="modal-overlay" (click)="closeAddTaskModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Add Task</h2>
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" [(ngModel)]="newTaskTitle" placeholder="Task title">
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="newTaskDescription" placeholder="Task description" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Time</label>
+        <div class="time-input">
+          <input type="number" min="0" [(ngModel)]="newTaskHours" placeholder="h">
+          <input type="number" min="0" max="59" [(ngModel)]="newTaskMinutes" placeholder="m">
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button (click)="closeAddTaskModal()">Cancel</button>
+        <button (click)="createTask()">Create</button>
+      </div>
+    </div>
+  </div>
+}

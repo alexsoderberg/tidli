@@ -9,9 +9,40 @@
         (taskRemoved)="removeTask(stage.id, $event)"
         (taskMovedLeft)="moveTaskLeft(stage.id, $event)"
         (taskMovedRight)="moveTaskRight(stage.id, $event)"
-        (taskDropped)="moveTaskToStage(stage.id, $event)">
+        (taskDropped)="moveTaskToStage(stage.id, $event)"
+        (stageDragged)="onStageDragStart(i)"
+        (stageReordered)="onStageReordered($event)"
+        (taskCreated)="addTask(stage.id, $event)">
       </app-stage>
     }
   </div>
-  <button (click)="handleAddStage()">Add stage</button>
+  <button class="add-stage-btn" (click)="handleAddStage()">+ Add Stage</button>
 </div>
+
+@if (showAddStageModal()) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Add Stage</h2>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" [(ngModel)]="newStageName" placeholder="Stage name">
+      </div>
+      <div class="form-group">
+        <label>Order</label>
+        <input type="number" [(ngModel)]="newStageOrder">
+      </div>
+      <div class="form-group">
+        <label>Type</label>
+        <select [(ngModel)]="newStageType">
+          <option value="Backlog">Backlog</option>
+          <option value="InProgress">InProgress</option>
+          <option value="Done">Done</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button (click)="closeModal()">Cancel</button>
+        <button (click)="createStage()">Create</button>
+      </div>
+    </div>
+  </div>
+}
