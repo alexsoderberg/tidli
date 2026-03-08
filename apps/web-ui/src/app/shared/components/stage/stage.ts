@@ -17,6 +17,9 @@ export class Stage {
   taskRemoved = output<string>();
   taskMovedLeft = output<string>();
   taskMovedRight = output<string>();
+  taskDropped = output<string>();
+
+  isDragOver = false;
 
   canMoveLeft(): boolean {
     return this.stageIndex() > 0;
@@ -43,6 +46,25 @@ export class Stage {
   onMoveRight(taskId: string): void {
     if (this.canMoveRight()) {
       this.taskMovedRight.emit(taskId);
+    }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.dataTransfer!.dropEffect = 'move';
+    this.isDragOver = true;
+  }
+
+  onDragLeave(): void {
+    this.isDragOver = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    this.isDragOver = false;
+    const taskId = event.dataTransfer?.getData('text/plain');
+    if (taskId) {
+      this.taskDropped.emit(taskId);
     }
   }
 }

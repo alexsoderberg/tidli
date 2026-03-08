@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd()">
   <h3>{{title()}}</h3>
   <p>{{description()}}</p>
   <ng-content></ng-content>

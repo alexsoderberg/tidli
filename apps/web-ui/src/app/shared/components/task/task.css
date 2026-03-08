@@ -6,4 +6,9 @@
   justify-content: center;
   align-items: center;
   padding: 5px;
+  cursor: grab;
+}
+
+.container:active {
+  cursor: grabbing;
 }

@@ -8,7 +8,8 @@
         (taskAdded)="addTask(stage.id)"
         (taskRemoved)="removeTask(stage.id, $event)"
         (taskMovedLeft)="moveTaskLeft(stage.id, $event)"
-        (taskMovedRight)="moveTaskRight(stage.id, $event)">
+        (taskMovedRight)="moveTaskRight(stage.id, $event)"
+        (taskDropped)="moveTaskToStage(stage.id, $event)">
       </app-stage>
     }
   </div>

@@ -1,9 +1,10 @@
-<div class="container">
+<div class="container" [class.drag-over]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave()" (drop)="onDrop($event)">
   <h2>{{stage().title}}</h2>
   @for (task of stage().tasks; track task.id) {
     <app-task 
       [title]="task.title" 
-      [description]="task.description">
+      [description]="task.description"
+      [id]="task.id">
       <div class="actions">
         <button (click)="onMoveLeft(task.id)" [disabled]="!canMoveLeft()">←</button>
         <button (click)="onRemoveTask(task.id)">×</button>

@@ -116,6 +116,40 @@ export class Project implements OnInit {
     }
   }
 
+  moveTaskToStage(targetStageId: string, taskId: string): void {
+    let task: import('../task/task.model').Task | undefined;
+    let sourceStageId: string | undefined;
+
+    for (const stage of this.stages()) {
+      const found = stage.tasks.find(t => t.id === taskId);
+      if (found) {
+        task = found;
+        sourceStageId = stage.id;
+        break;
+      }
+    }
+
+    if (!task || !sourceStageId) {
+      return;
+    }
+
+    if (sourceStageId === targetStageId) {
+      return;
+    }
+
+    this.stages.update(stages =>
+      stages.map(s => {
+        if (s.id === sourceStageId) {
+          return { ...s, tasks: s.tasks.filter(t => t.id !== taskId) };
+        }
+        if (s.id === targetStageId) {
+          return { ...s, tasks: [...s.tasks, task!] };
+        }
+        return s;
+      })
+    );
+  }
+
   handleAddStage(): void {
     console.log("handleAddStage triggered");
   }
