@@ -1,5 +1,16 @@
 <div class="container" draggable="true" (dragstart)="onDragStart($event)" (dragend)="onDragEnd()">
   <h3>{{title()}}</h3>
   <p>{{description()}}</p>
+  
+  @if (totalTime() > 0) {
+    <div class="time-display">{{ formatTime(totalTime()) }}</div>
+  }
+  
+  <div class="time-input">
+    <input type="number" min="0" placeholder="h" [(ngModel)]="hours" (keyup.enter)="addTime()">
+    <input type="number" min="0" max="59" placeholder="m" [(ngModel)]="minutes" (keyup.enter)="addTime()">
+    <button (click)="addTime()">+</button>
+  </div>
+  
   <ng-content></ng-content>
 </div>
